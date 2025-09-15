@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhu33r678o4gy"]
+[gd_scene load_steps=7 format=3 uid="uid://dhu33r678o4gy"]
 
 [ext_resource type="Script" uid="uid://d2wx5x2ux4pr0" path="res://scripts/Title.gd" id="1_0gcgq"]
 [ext_resource type="Shader" uid="uid://dx83fc8jmdu2u" path="res://shaders/waves.gdshader" id="2_waves"]
 [ext_resource type="Shader" path="res://shaders/vignette.gdshader" id="3_vignette"]
+[ext_resource type="AudioStream" path="res://sfx/sfx_ui_select.ogg" id="4_select"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_waves"]
 shader = ExtResource("2_waves")
@@ -26,6 +27,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0gcgq")
+
+[node name="SelectSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_select")
+volume_db = -6.0
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -88,3 +93,14 @@ custom_minimum_size = Vector2(260, 56)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "START"
+
+[node name="FadeRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+modulate = Color(1, 1, 1, 0)
+mouse_filter = 2
