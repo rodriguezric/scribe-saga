@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://7tm6e64dr7sl"]
+[gd_scene load_steps=6 format=3 uid="uid://7tm6e64dr7sl"]
 
 [ext_resource type="Script" uid="uid://bqmdlnoskwy5v" path="res://scripts/MessageWindow.gd" id="1_jy1am"]
 [ext_resource type="AudioStream" uid="uid://cpqw0yl0t1m0b" path="res://sfx/sfx_typer.ogg" id="2_typer"]
 [ext_resource type="Script" path="res://scripts/Game.gd" id="3_game"]
+[ext_resource type="AudioStream" path="res://sfx/sfx_ui_select.ogg" id="4_select"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7cqy"]
 bg_color = Color(0, 0, 0, 0)
@@ -102,3 +103,7 @@ theme_override_font_sizes/font_size = 28
 [node name="TypeSFX" type="AudioStreamPlayer" parent="MessageWindow"]
 stream = ExtResource("2_typer")
 volume_db = -4.0
+
+[node name="SelectSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_select")
+volume_db = -6.0
