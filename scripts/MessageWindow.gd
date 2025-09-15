@@ -1,5 +1,7 @@
 extends Panel
 
+signal continue_available(available: bool)
+
 @export var type_speed_chars_per_sec: float = 40.0
 @export var entries: PackedStringArray = [
     """
@@ -76,6 +78,7 @@ func _process(delta: float) -> void:
                     _page_done = true
                     prompt.visible = true
                     _blink_elapsed = 0.0
+                    continue_available.emit(has_more())
                     break
 
             if revealed_non_ws and not sfx.playing:
@@ -86,6 +89,7 @@ func _process(delta: float) -> void:
                 _page_done = true
                 prompt.visible = true
                 _blink_elapsed = 0.0
+                continue_available.emit(has_more())
     elif _page_done:
         # Blink the prompt when done
         _blink_elapsed += delta
@@ -93,13 +97,7 @@ func _process(delta: float) -> void:
             _blink_elapsed = 0.0
             prompt.visible = not prompt.visible
 
-func _unhandled_input(event: InputEvent) -> void:
-    if event is InputEventKey and event.pressed and not event.echo:
-        if event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER:
-            if _page_done:
-                prompt.visible = false
-                _advance_or_next_entry()
-                get_viewport().set_input_as_handled()
+## Enter key handling removed; use Continue button instead.
 
 func _load_entry(index: int) -> void:
     _entry_index = index
@@ -114,6 +112,17 @@ func _load_entry(index: int) -> void:
 func _start_next_page() -> void:
     # Start typing from current position within the entry; show only the remaining text
     var remaining_text: String = _entry_text.substr(_entry_char_index)
+    # If starting this page with whitespace, skip it so pages don't begin with spaces
+    var skip: int = 0
+    while skip < remaining_text.length():
+        var ch: String = remaining_text.substr(skip, 1)
+        if ch == " " or ch == "\n" or ch == "\t":
+            skip += 1
+        else:
+            break
+    if skip > 0:
+        _entry_char_index += skip
+        remaining_text = remaining_text.substr(skip)
     label.text = remaining_text
     label.visible_characters = 0
     _visible_chars = 0
@@ -121,6 +130,7 @@ func _start_next_page() -> void:
     _typing = true
     _page_done = false
     prompt.visible = false
+    continue_available.emit(false)
 
 func _find_prev_whitespace(from_index: int) -> int:
     var i: int = from_index
@@ -148,6 +158,16 @@ func _advance_or_next_entry() -> void:
             _typing = false
             _page_done = true
             prompt.visible = true
+            continue_available.emit(false)
     else:
         _entry_char_index += _visible_chars
         _start_next_page()
+
+func has_more() -> bool:
+    var at_end_of_entry: bool = (_entry_char_index + _visible_chars) >= _entry_text.length()
+    var at_last_entry: bool = (_entry_index + 1) >= entries.size()
+    return not (at_end_of_entry and at_last_entry)
+
+func advance() -> void:
+    if _page_done:
+        _advance_or_next_entry()
