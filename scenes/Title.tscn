@@ -1,0 +1,90 @@
+[gd_scene load_steps=6 format=3 uid="uid://dhu33r678o4gy"]
+
+[ext_resource type="Script" uid="uid://d2wx5x2ux4pr0" path="res://scripts/Title.gd" id="1_0gcgq"]
+[ext_resource type="Shader" uid="uid://dx83fc8jmdu2u" path="res://shaders/waves.gdshader" id="2_waves"]
+[ext_resource type="Shader" path="res://shaders/vignette.gdshader" id="3_vignette"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_waves"]
+shader = ExtResource("2_waves")
+shader_parameter/line_color = Color(1, 1, 1, 0.07)
+shader_parameter/amplitude = 0.02
+shader_parameter/frequency = 2.5
+shader_parameter/speed = 0.2
+shader_parameter/thickness = 0.08
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
+shader = ExtResource("3_vignette")
+shader_parameter/strength = 0.55
+shader_parameter/inner = 0.45
+shader_parameter/outer = 0.98
+
+[node name="Title" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0gcgq")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Tint" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.18, 0.2, 0.35, 0.08)
+
+[node name="Waves" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_waves")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Vignette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_vignette")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="Center/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "SCRIBE SAGA"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="Center/VBox"]
+custom_minimum_size = Vector2(260, 56)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "START"

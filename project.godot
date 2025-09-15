@@ -13,6 +13,10 @@ config_version=5
 config/name="Scribe Saga"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+run/main_scene="res://scenes/Title.tscn"
+
+[gui]
+theme/custom="res://themes/default_theme.tres"
 
 [rendering]
 
