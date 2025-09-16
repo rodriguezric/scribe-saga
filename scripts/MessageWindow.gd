@@ -78,7 +78,7 @@ func _process(delta: float) -> void:
                     _page_done = true
                     prompt.visible = true
                     _blink_elapsed = 0.0
-                    continue_available.emit(has_more())
+                    continue_available.emit(true)
                     break
 
             if revealed_non_ws and not sfx.playing:
@@ -89,7 +89,7 @@ func _process(delta: float) -> void:
                 _page_done = true
                 prompt.visible = true
                 _blink_elapsed = 0.0
-                continue_available.emit(has_more())
+                continue_available.emit(true)
     elif _page_done:
         # Blink the prompt when done
         _blink_elapsed += delta
@@ -158,7 +158,7 @@ func _advance_or_next_entry() -> void:
             _typing = false
             _page_done = true
             prompt.visible = true
-            continue_available.emit(false)
+            continue_available.emit(true)
     else:
         _entry_char_index += _visible_chars
         _start_next_page()
