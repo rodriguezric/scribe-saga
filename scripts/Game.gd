@@ -13,6 +13,11 @@ func _ready() -> void:
 func _on_continue_available(available: bool) -> void:
     continue_button.visible = available
     if available:
+        # Update label based on whether there is more story or we're done
+        var more: bool = false
+        if message_window.has_method("has_more"):
+            more = bool(message_window.call("has_more"))
+        continue_button.text = "Continue" if more else "Enter Town"
         continue_button.grab_focus()
 
 func _on_continue_pressed() -> void:
@@ -21,5 +26,11 @@ func _on_continue_pressed() -> void:
         if select_sfx.playing:
             select_sfx.stop()
         select_sfx.play()
-    if message_window.has_method("advance"):
-        message_window.call("advance")
+    var more: bool = false
+    if message_window.has_method("has_more"):
+        more = bool(message_window.call("has_more"))
+    if more:
+        if message_window.has_method("advance"):
+            message_window.call("advance")
+    else:
+        get_tree().change_scene_to_file("res://scenes/Town.tscn")

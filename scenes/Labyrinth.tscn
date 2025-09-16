@@ -1,0 +1,28 @@
+[gd_scene format=3 load_steps=2]
+
+[ext_resource type="Script" path="res://scripts/Labyrinth.gd" id="1_lab"]
+
+[node name="Labyrinth" type="Node2D"]
+script = ExtResource("1_lab")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="BackControl" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="UI/BackControl"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 180.0
+offset_bottom = 52.0
+text = "Back to Town"
