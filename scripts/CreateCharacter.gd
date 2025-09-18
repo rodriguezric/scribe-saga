@@ -1,11 +1,11 @@
 extends Control
 
-@onready var class_list: VBoxContainer = $Center/Panel/VBox/ClassCenter/ClassList
-@onready var warrior_btn: Button = $Center/Panel/VBox/ClassCenter/ClassList/WarriorBtn
-@onready var templar_btn: Button = $Center/Panel/VBox/ClassCenter/ClassList/TemplarBtn
-@onready var rogue_btn: Button = $Center/Panel/VBox/ClassCenter/ClassList/RogueBtn
-@onready var taoist_btn: Button = $Center/Panel/VBox/ClassCenter/ClassList/TaoistBtn
-@onready var mage_btn: Button = $Center/Panel/VBox/ClassCenter/ClassList/MageBtn
+@onready var class_list: VBoxContainer = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList
+@onready var warrior_btn: Button = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList/WarriorBtn
+@onready var templar_btn: Button = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList/TemplarBtn
+@onready var rogue_btn: Button = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList/RogueBtn
+@onready var taoist_btn: Button = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList/TaoistBtn
+@onready var mage_btn: Button = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList/MageBtn
 
 @onready var message_panel: Panel = $MessageWindow
 @onready var yes_btn: Button = $Center/Panel/VBox/ChoiceButtons/YesBtn

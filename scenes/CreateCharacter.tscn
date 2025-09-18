@@ -67,30 +67,53 @@ text = "Create Character"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 28
 
-[node name="ClassCenter" type="CenterContainer" parent="Center/Panel/VBox"]
-layout_mode = 2
+[node name="ClassWindowCenter" type="CenterContainer" parent="Center/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ClassList" type="VBoxContainer" parent="Center/Panel/VBox/ClassCenter"]
+[node name="ClassWindow" type="Panel" parent="Center/Panel/ClassWindowCenter"]
 layout_mode = 2
-theme_override_constants/separation = 8
+custom_minimum_size = Vector2(420, 360)
+theme_override_styles/panel = SubResource("StyleBoxFlat_border")
 
-[node name="WarriorBtn" type="Button" parent="Center/Panel/VBox/ClassCenter/ClassList"]
+[node name="Margin2" type="MarginContainer" parent="Center/Panel/ClassWindowCenter/ClassWindow"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ClassList" type="VBoxContainer" parent="Center/Panel/ClassWindowCenter/ClassWindow/Margin2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ChooseLabel" type="Label" parent="Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList"]
+layout_mode = 2
+text = "Choose Class"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="WarriorBtn" type="Button" parent="Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList"]
 layout_mode = 2
 text = "Warrior"
 
-[node name="TemplarBtn" type="Button" parent="Center/Panel/VBox/ClassCenter/ClassList"]
+[node name="TemplarBtn" type="Button" parent="Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList"]
 layout_mode = 2
 text = "Templar"
 
-[node name="RogueBtn" type="Button" parent="Center/Panel/VBox/ClassCenter/ClassList"]
+[node name="RogueBtn" type="Button" parent="Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList"]
 layout_mode = 2
 text = "Rogue"
 
-[node name="TaoistBtn" type="Button" parent="Center/Panel/VBox/ClassCenter/ClassList"]
+[node name="TaoistBtn" type="Button" parent="Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList"]
 layout_mode = 2
 text = "Taoist"
 
-[node name="MageBtn" type="Button" parent="Center/Panel/VBox/ClassCenter/ClassList"]
+[node name="MageBtn" type="Button" parent="Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList"]
 layout_mode = 2
 text = "Mage"
 
