@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" path="res://sfx/sfx_ui_select.ogg" id="4_select"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7cqy"]
-bg_color = Color(0, 0, 0, 0)
+bg_color = Color(0, 0, 0, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -44,6 +44,7 @@ grow_horizontal = 2
 clip_contents = true
 theme_override_styles/panel = SubResource("StyleBoxFlat_g7cqy")
 script = ExtResource("1_jy1am")
+z_index = 100
 
 [node name="ContinueButton" type="Button" parent="."]
 layout_mode = 1

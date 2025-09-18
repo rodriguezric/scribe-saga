@@ -2,7 +2,6 @@ extends Control
 
 @onready var message_window: Node = $MessageWindow
 @onready var continue_button: Button = $ContinueButton
-@onready var select_sfx: AudioStreamPlayer = $SelectSFX
 
 func _ready() -> void:
     continue_button.visible = false
@@ -21,11 +20,7 @@ func _on_continue_available(available: bool) -> void:
         continue_button.grab_focus()
 
 func _on_continue_pressed() -> void:
-    if is_instance_valid(select_sfx):
-        # Restart the select sound for quick repeated clicks
-        if select_sfx.playing:
-            select_sfx.stop()
-        select_sfx.play()
+    _uib().play_select()
     var more: bool = false
     if message_window.has_method("has_more"):
         more = bool(message_window.call("has_more"))
@@ -34,3 +29,6 @@ func _on_continue_pressed() -> void:
             message_window.call("advance")
     else:
         get_tree().change_scene_to_file("res://scenes/Town.tscn")
+
+func _uib() -> Node:
+    return get_node("/root/UIBus")

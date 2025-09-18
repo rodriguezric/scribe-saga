@@ -1,6 +1,8 @@
-[gd_scene format=3 load_steps=2]
+[gd_scene format=3 load_steps=4]
 
-[ext_resource type="Script" path="res://scripts/StubScene.gd" id="1_stub"]
+[ext_resource type="Script" path="res://scripts/Tavern.gd" id="1_tavern"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MessageWindow.tscn" id="2_mw"]
+[ext_resource type="AudioStream" path="res://sfx/sfx_ui_select.ogg" id="4_select"]
 
 [node name="Tavern" type="Control"]
 layout_mode = 3
@@ -9,7 +11,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_stub")
+script = ExtResource("1_tavern")
+
+[node name="SelectSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_select")
+volume_db = -6.0
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -19,6 +25,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="MessageWindow" parent="." instance=ExtResource("2_mw")]
+
+
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -44,8 +54,19 @@ layout_mode = 2
 text = "Create and recruit party members."
 horizontal_alignment = 1
 
+[node name="RosterScroll" type="ScrollContainer" parent="Center/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 180)
+
+[node name="RosterList" type="VBoxContainer" parent="Center/VBox/RosterScroll"]
+layout_mode = 2
+
+[node name="CreateButton" type="Button" parent="Center/VBox"]
+layout_mode = 2
+text = "Create Character"
+custom_minimum_size = Vector2(240, 44)
+
 [node name="BackButton" type="Button" parent="Center/VBox"]
 layout_mode = 2
 text = "Back to Town"
 custom_minimum_size = Vector2(240, 44)
-

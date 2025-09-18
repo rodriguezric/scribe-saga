@@ -1,6 +1,19 @@
-[gd_scene format=3 load_steps=2]
+[gd_scene format=3 load_steps=3]
 
 [ext_resource type="Script" path="res://scripts/StubScene.gd" id="1_stub"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MessageWindow.tscn" id="2_mw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_msg_border"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="Status" type="Control"]
 layout_mode = 3
@@ -19,6 +32,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="MessageWindow" parent="." instance=ExtResource("2_mw")]
+
+
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -48,4 +65,3 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Back to Town"
 custom_minimum_size = Vector2(240, 44)
-

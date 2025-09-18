@@ -18,6 +18,10 @@ run/main_scene="res://scenes/Title.tscn"
 [gui]
 theme/custom="res://themes/default_theme.tres"
 
+[autoload]
+GameData="res://scripts/GameData.gd"
+UIBus="res://scripts/UIBus.gd"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

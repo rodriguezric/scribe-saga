@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="AudioStream" path="res://sfx/sfx_ui_select.ogg" id="1_select"]
+
+[sub_resource type="StyleBoxFlat" id="1_border"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="CenteredPrompt" type="CanvasLayer"]
+layer = 100
+
+[node name="Root" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Window" type="Panel" parent="Root"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 120)
+theme_override_styles/panel = SubResource("1_border")
+
+[node name="Margin" type="MarginContainer" parent="Root/Window"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Content" type="CenterContainer" parent="Root/Window/Margin"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBox" type="HBoxContainer" parent="Root/Window/Margin/Content"]
+layout_mode = 2
+theme_override_constants/separation = 12
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Yes" type="Button" parent="Root/Window/Margin/Content/HBox"]
+layout_mode = 2
+text = "Yes"
+custom_minimum_size = Vector2(120, 44)
+focus_mode = 2
+
+[node name="No" type="Button" parent="Root/Window/Margin/Content/HBox"]
+layout_mode = 2
+text = "No"
+custom_minimum_size = Vector2(120, 44)
+focus_mode = 2
+
+[node name="SelectSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_select")
+volume_db = -6.0

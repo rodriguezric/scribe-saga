@@ -1,6 +1,7 @@
 [gd_scene format=3 load_steps=2]
 
 [ext_resource type="Script" path="res://scripts/Town.gd" id="1_town"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MessageWindow.tscn" id="2_mw"]
 
 [node name="Town" type="Control"]
 layout_mode = 3
@@ -19,6 +20,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="MessageWindow" parent="." instance=ExtResource("2_mw")]
+
+
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1

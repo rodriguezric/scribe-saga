@@ -1,0 +1,360 @@
+[gd_scene format=3 load_steps=4]
+
+[ext_resource type="Script" path="res://scripts/CreateCharacter.gd" id="1_cc"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MessageWindow.tscn" id="2_mw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_border"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="CreateCharacter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cc")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MessageWindow" parent="." instance=ExtResource("2_mw")]
+
+; MessageWindow provided by PackedScene
+
+[node name="Center" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Center"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="Title" type="Label" parent="Center/Panel/VBox"]
+layout_mode = 2
+text = "Create Character"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="ClassCenter" type="CenterContainer" parent="Center/Panel/VBox"]
+layout_mode = 2
+
+[node name="ClassList" type="VBoxContainer" parent="Center/Panel/VBox/ClassCenter"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="WarriorBtn" type="Button" parent="Center/Panel/VBox/ClassCenter/ClassList"]
+layout_mode = 2
+text = "Warrior"
+
+[node name="TemplarBtn" type="Button" parent="Center/Panel/VBox/ClassCenter/ClassList"]
+layout_mode = 2
+text = "Templar"
+
+[node name="RogueBtn" type="Button" parent="Center/Panel/VBox/ClassCenter/ClassList"]
+layout_mode = 2
+text = "Rogue"
+
+[node name="TaoistBtn" type="Button" parent="Center/Panel/VBox/ClassCenter/ClassList"]
+layout_mode = 2
+text = "Taoist"
+
+[node name="MageBtn" type="Button" parent="Center/Panel/VBox/ClassCenter/ClassList"]
+layout_mode = 2
+text = "Mage"
+
+; moved MessageWindow to top of scene
+
+[node name="ChoiceButtons" type="HBoxContainer" parent="Center/Panel/VBox"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="YesBtn" type="Button" parent="Center/Panel/VBox/ChoiceButtons"]
+layout_mode = 2
+text = "Yes"
+custom_minimum_size = Vector2(120, 44)
+
+[node name="NoBtn" type="Button" parent="Center/Panel/VBox/ChoiceButtons"]
+layout_mode = 2
+text = "No"
+custom_minimum_size = Vector2(120, 44)
+
+[node name="NamePrompt" type="HBoxContainer" parent="Center/Panel/VBox"]
+visible = false
+layout_mode = 2
+
+[node name="NameLabel2" type="Label" parent="Center/Panel/VBox/NamePrompt"]
+layout_mode = 2
+text = "Enter Name:"
+custom_minimum_size = Vector2(110, 0)
+
+[node name="NameEntry" type="LineEdit" parent="Center/Panel/VBox/NamePrompt"]
+layout_mode = 2
+placeholder_text = "Name"
+
+[node name="NameOk" type="Button" parent="Center/Panel/VBox/NamePrompt"]
+layout_mode = 2
+text = "OK"
+custom_minimum_size = Vector2(100, 36)
+
+[node name="ConfirmStats" type="VBoxContainer" parent="Center/Panel/VBox"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ChoiceCenter" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameCenter" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameHBox2" type="HBoxContainer" parent="NameCenter"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NameEntry2" type="LineEdit" parent="NameCenter/NameHBox2"]
+layout_mode = 2
+max_length = 12
+custom_minimum_size = Vector2(400, 44)
+placeholder_text = "Enter name"
+
+[node name="NameOk2" type="Button" parent="NameCenter/NameHBox2"]
+layout_mode = 2
+text = "OK"
+custom_minimum_size = Vector2(120, 44)
+
+[node name="ChoiceHBox" type="HBoxContainer" parent="ChoiceCenter"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="YesCenter" type="Button" parent="ChoiceCenter/ChoiceHBox"]
+layout_mode = 2
+text = "Yes"
+custom_minimum_size = Vector2(120, 44)
+
+[node name="NoCenter" type="Button" parent="ChoiceCenter/ChoiceHBox"]
+layout_mode = 2
+text = "No"
+custom_minimum_size = Vector2(120, 44)
+
+[node name="Name" type="Label" parent="Center/Panel/VBox/ConfirmStats"]
+layout_mode = 2
+text = "Name"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 32
+
+[node name="Class" type="Label" parent="Center/Panel/VBox/ConfirmStats"]
+layout_mode = 2
+text = "Class"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="Cols" type="HBoxContainer" parent="Center/Panel/VBox/ConfirmStats"]
+layout_mode = 2
+theme_override_constants/separation = 48
+
+[node name="Left" type="VBoxContainer" parent="Center/Panel/VBox/ConfirmStats/Cols"]
+layout_mode = 2
+
+[node name="HP" type="Label" parent="Center/Panel/VBox/ConfirmStats/Cols/Left"]
+layout_mode = 2
+text = "HP:"
+theme_override_font_sizes/font_size = 22
+[node name="MP" type="Label" parent="Center/Panel/VBox/ConfirmStats/Cols/Left"]
+layout_mode = 2
+text = "MP:"
+theme_override_font_sizes/font_size = 22
+[node name="STR" type="Label" parent="Center/Panel/VBox/ConfirmStats/Cols/Left"]
+layout_mode = 2
+text = "Strength:"
+theme_override_font_sizes/font_size = 22
+[node name="DEX" type="Label" parent="Center/Panel/VBox/ConfirmStats/Cols/Left"]
+layout_mode = 2
+text = "Dexterity:"
+theme_override_font_sizes/font_size = 22
+
+[node name="Right" type="VBoxContainer" parent="Center/Panel/VBox/ConfirmStats/Cols"]
+layout_mode = 2
+
+[node name="INT" type="Label" parent="Center/Panel/VBox/ConfirmStats/Cols/Right"]
+layout_mode = 2
+text = "Intelligence:"
+theme_override_font_sizes/font_size = 22
+[node name="WIL" type="Label" parent="Center/Panel/VBox/ConfirmStats/Cols/Right"]
+layout_mode = 2
+text = "Will:"
+theme_override_font_sizes/font_size = 22
+[node name="VIT" type="Label" parent="Center/Panel/VBox/ConfirmStats/Cols/Right"]
+layout_mode = 2
+text = "Vitality:"
+theme_override_font_sizes/font_size = 22
+[node name="AGI" type="Label" parent="Center/Panel/VBox/ConfirmStats/Cols/Right"]
+layout_mode = 2
+text = "Agility:"
+theme_override_font_sizes/font_size = 22
+[node name="SPD" type="Label" parent="Center/Panel/VBox/ConfirmStats/Cols/Right"]
+layout_mode = 2
+text = "Speed:"
+theme_override_font_sizes/font_size = 22
+
+[node name="ConfirmButtons" type="HBoxContainer" parent="Center/Panel/VBox/ConfirmStats"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="YesConfirm" type="Button" parent="Center/Panel/VBox/ConfirmStats/ConfirmButtons"]
+layout_mode = 2
+text = "Yes"
+custom_minimum_size = Vector2(120, 44)
+
+[node name="NoConfirm" type="Button" parent="Center/Panel/VBox/ConfirmStats/ConfirmButtons"]
+layout_mode = 2
+text = "No"
+custom_minimum_size = Vector2(120, 44)
+[node name="NameHBox" type="HBoxContainer" parent="Center/Panel/VBox"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Center/Panel/VBox/NameHBox"]
+layout_mode = 2
+text = "Name:"
+custom_minimum_size = Vector2(70, 0)
+
+[node name="NameEdit" type="LineEdit" parent="Center/Panel/VBox/NameHBox"]
+layout_mode = 2
+placeholder_text = "Enter name"
+
+[node name="ClassHBox" type="HBoxContainer" parent="Center/Panel/VBox"]
+layout_mode = 2
+
+[node name="ClassLabel" type="Label" parent="Center/Panel/VBox/ClassHBox"]
+layout_mode = 2
+text = "Class:"
+custom_minimum_size = Vector2(70, 0)
+
+[node name="ClassSelect" type="OptionButton" parent="Center/Panel/VBox/ClassHBox"]
+layout_mode = 2
+
+[node name="Desc" type="Label" parent="Center/Panel/VBox"]
+layout_mode = 2
+text = ""
+autowrap_mode = 2
+
+[node name="StatsGrid" type="GridContainer" parent="Center/Panel/VBox"]
+layout_mode = 2
+columns = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 4
+
+[node name="HPLabel" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "HP:"
+[node name="HPValue" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "-"
+[node name="MPLabel" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "MP:"
+[node name="MPValue" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "-"
+[node name="StrLabel" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "Strength:"
+[node name="StrValue" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "-"
+[node name="DexLabel" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "Dexterity:"
+[node name="DexValue" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "-"
+[node name="IntLabel" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "Intelligence:"
+[node name="IntValue" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "-"
+[node name="WillLabel" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "Will:"
+[node name="WillValue" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "-"
+[node name="VitLabel" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "Vitality:"
+[node name="VitValue" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "-"
+[node name="AgiLabel" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "Agility:"
+[node name="AgiValue" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "-"
+[node name="SpdLabel" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "Speed:"
+[node name="SpdValue" type="Label" parent="Center/Panel/VBox/StatsGrid"]
+layout_mode = 2
+text = "-"
+
+[node name="Buttons" type="HBoxContainer" parent="Center/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="CreateButton" type="Button" parent="Center/Panel/VBox/Buttons"]
+layout_mode = 2
+text = "Create"
+disabled = true
+custom_minimum_size = Vector2(140, 44)
+
+[node name="CancelButton" type="Button" parent="Center/Panel/VBox/Buttons"]
+layout_mode = 2
+text = "Cancel"
+custom_minimum_size = Vector2(140, 44)

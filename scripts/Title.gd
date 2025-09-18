@@ -30,4 +30,4 @@ func _on_start_pressed() -> void:
     var tween := create_tween()
     tween.tween_property(fade_rect, "modulate:a", 1.0, duration)
     await tween.finished
-    get_tree().change_scene_to_file("res://scenes/Game.tscn")
+    get_tree().change_scene_to_file("res://scenes/Town.tscn")

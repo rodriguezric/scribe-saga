@@ -3,23 +3,11 @@ extends Panel
 signal continue_available(available: bool)
 
 @export var type_speed_chars_per_sec: float = 40.0
-@export var entries: PackedStringArray = [
-    """
-    In the ancient halls where stories are forged,
-    ink flows like rivers and words shape the world.
+@export var entries: PackedStringArray = []
 
-    You are the Scribe — keeper of lore, binder of fates.
-    Your quill carries the whisper of old gods and new dreams.
-    """,
-    """
-    Tonight, a tale calls to be written.
-    Will you answer?
-    """
-]
-
-@onready var label: RichTextLabel = $Margin/RichText
-@onready var prompt: Label = $Prompt
-@onready var sfx: AudioStreamPlayer = $TypeSFX
+@onready var label: RichTextLabel = get_node_or_null("Margin/RichText") as RichTextLabel
+@onready var prompt: Label = get_node_or_null("Prompt") as Label
+@onready var sfx: AudioStreamPlayer = get_node_or_null("TypeSFX") as AudioStreamPlayer
 
 var _elapsed: float = 0.0
 var _visible_chars: int = 0
@@ -33,24 +21,52 @@ var _all_done: bool = false
 var _entry_index: int = 0
 var _entry_text: String = ""
 var _entry_char_index: int = 0
-var _two_line_height: float = 0.0
+var _line_height: float = 0.0
+var _max_lines: int = 2
+var _max_content_height: float = 0.0
+var _static_prefix: String = ""
 
 func _ready() -> void:
-    prompt.visible = false
+    visible = false
+    _ensure_refs()
+    if prompt:
+        prompt.visible = false
     # Ensure the label doesn't expand beyond our window; we'll clip to area
-    label.fit_content = false
+    if label:
+        label.fit_content = false
     # Compute approx height of two lines for pagination cutoff
-    var fnt: Font = label.get_theme_font("normal_font")
-    var fsz: int = label.get_theme_font_size("normal_font_size")
-    var line_h: float = 0.0
-    if fnt:
-        line_h = fnt.get_height(fsz)
-    _two_line_height = line_h * 2.0 + 2.0
+    _recalc_line_height()
 
-    _load_entry(0)
-    _start_next_page()
+func _ensure_refs() -> void:
+    # In some instancing cases, @onready lookups may fail; resolve dynamically
+    if label == null:
+        label = get_node_or_null("Margin/RichText") as RichTextLabel
+        if label == null:
+            label = find_child("RichText", true, false) as RichTextLabel
+    if prompt == null:
+        prompt = get_node_or_null("Prompt") as Label
+        if prompt == null:
+            prompt = find_child("Prompt", true, false) as Label
+    if sfx == null:
+        sfx = get_node_or_null("TypeSFX") as AudioStreamPlayer
+        if sfx == null:
+            sfx = find_child("TypeSFX", true, false) as AudioStreamPlayer
+
+func _recalc_line_height() -> void:
+    var line_h: float = 0.0
+    if label:
+        var fnt: Font = label.get_theme_font("normal_font")
+        var fsz: int = label.get_theme_font_size("normal_font_size")
+        if fnt:
+            line_h = fnt.get_height(fsz)
+    _line_height = line_h
+    _max_content_height = _line_height * float(_max_lines) + 2.0
+
+    # Do not start automatically; await explicit start_with() call
 
 func _process(delta: float) -> void:
+    if label == null or prompt == null:
+        return
     if _typing and not _all_done:
         _elapsed += delta
         var inc: int = int(type_speed_chars_per_sec * _elapsed)
@@ -66,7 +82,7 @@ func _process(delta: float) -> void:
                 if ch != " " and ch != "\n" and ch != "\t":
                     revealed_non_ws = true
                 # Check if we overflow two lines visually; if so, rollback last char and end page
-                if label.get_content_height() > _two_line_height:
+                if label.get_content_height() > _max_content_height:
                     # Roll back to the previous whitespace to avoid breaking words
                     var cut: int = _find_prev_whitespace(_visible_chars)
                     if cut >= 0:
@@ -99,13 +115,40 @@ func _process(delta: float) -> void:
 
 ## Enter key handling removed; use Continue button instead.
 
+func start_with(new_entries: PackedStringArray) -> void:
+    _ensure_refs()
+    _max_lines = 2
+    _recalc_line_height()
+    entries = new_entries
+    _entry_index = 0
+    _entry_char_index = 0
+    _all_done = false
+    _static_prefix = ""
+    visible = true
+    _load_entry(0)
+    _start_next_page()
+
+func start_with_title(title: String, new_entries: PackedStringArray) -> void:
+    _ensure_refs()
+    _max_lines = 3
+    _recalc_line_height()
+    _static_prefix = title.strip_edges() + "\n"
+    entries = new_entries
+    _entry_index = 0
+    _entry_char_index = 0
+    _all_done = false
+    visible = true
+    _load_entry(0)
+    _start_next_page()
+
 func _load_entry(index: int) -> void:
     _entry_index = index
     # Prepare entry and clear window
     _entry_text = _normalize_whitespace(entries[_entry_index])
     _entry_char_index = 0
-    label.text = ""
-    label.visible_characters = 0
+    if label:
+        label.text = ""
+        label.visible_characters = 0
     _visible_chars = 0
     _total_chars = 0
 
@@ -123,16 +166,23 @@ func _start_next_page() -> void:
     if skip > 0:
         _entry_char_index += skip
         remaining_text = remaining_text.substr(skip)
-    label.text = remaining_text
-    label.visible_characters = 0
-    _visible_chars = 0
-    _total_chars = label.get_total_character_count()
+    if label:
+        label.text = _static_prefix + remaining_text
+        label.visible_characters = _static_prefix.length()
+        _visible_chars = label.visible_characters
+        _total_chars = label.get_total_character_count()
+    else:
+        _visible_chars = 0
+        _total_chars = 0
     _typing = true
     _page_done = false
-    prompt.visible = false
+    if prompt:
+        prompt.visible = false
     continue_available.emit(false)
 
 func _find_prev_whitespace(from_index: int) -> int:
+    if label == null:
+        return -1
     var i: int = from_index
     while i > 0:
         var ch: String = label.text.substr(i - 1, 1)

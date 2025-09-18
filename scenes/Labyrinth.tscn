@@ -1,6 +1,7 @@
-[gd_scene format=3 load_steps=2]
+[gd_scene format=3 load_steps=3]
 
 [ext_resource type="Script" path="res://scripts/Labyrinth.gd" id="1_lab"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MessageWindow.tscn" id="2_mw"]
 
 [node name="Labyrinth" type="Node2D"]
 script = ExtResource("1_lab")
@@ -26,3 +27,7 @@ offset_top = 12.0
 offset_right = 180.0
 offset_bottom = 52.0
 text = "Back to Town"
+
+[node name="MessageWindow" parent="UI" instance=ExtResource("2_mw")]
+
+; MessageWindow provided by PackedScene
