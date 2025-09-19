@@ -3,6 +3,7 @@ extends Node
 var _prompt_instance: Node = null
 var _sfx_player: AudioStreamPlayer = null
 var _sfx_select: AudioStream = preload("res://sfx/sfx_ui_select.ogg")
+var _menu_instance: Node = null
 
 func _get_message_window() -> Node:
     var root: Node = get_tree().current_scene
@@ -66,3 +67,26 @@ func show_prompt(on_yes: Callable, on_no: Callable) -> void:
 func hide_prompt() -> void:
     if _prompt_instance and is_instance_valid(_prompt_instance):
         _prompt_instance.visible = false
+func ensure_menu() -> Node:
+    if _menu_instance and is_instance_valid(_menu_instance):
+        _menu_instance.queue_free()
+        _menu_instance = null
+    var scene: PackedScene = load("res://scenes/ui/CenteredMenu.tscn")
+    _menu_instance = scene.instantiate()
+    get_tree().current_scene.add_child(_menu_instance)
+    return _menu_instance
+
+func show_menu(options: PackedStringArray, on_select: Callable) -> void:
+    var m := ensure_menu()
+    m.visible = true
+    m.call("set_options", options)
+    var handler := func(idx, text):
+        hide_menu()
+        play_select()
+        if on_select.is_valid():
+            on_select.call(idx, text)
+    m.connect("option_selected", handler)
+
+func hide_menu() -> void:
+    if _menu_instance and is_instance_valid(_menu_instance):
+        _menu_instance.visible = false
