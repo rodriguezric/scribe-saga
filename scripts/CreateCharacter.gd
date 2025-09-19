@@ -1,11 +1,5 @@
 extends Control
 
-@onready var class_list: VBoxContainer = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList
-@onready var warrior_btn: Button = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList/WarriorBtn
-@onready var templar_btn: Button = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList/TemplarBtn
-@onready var rogue_btn: Button = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList/RogueBtn
-@onready var taoist_btn: Button = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList/TaoistBtn
-@onready var mage_btn: Button = $Center/Panel/ClassWindowCenter/ClassWindow/Margin2/ClassList/MageBtn
 
 @onready var message_panel: Panel = $MessageWindow
 @onready var yes_btn: Button = $Center/Panel/VBox/ChoiceButtons/YesBtn
@@ -24,6 +18,7 @@ extends Control
 @onready var name_entry2: LineEdit = $NameCenter/NameHBox2/NameEntry2
 @onready var name_ok2: Button = $NameCenter/NameHBox2/NameOk2
 
+
 var _state: String = "class_list"
 var _selected_class: String = ""
 var _temp_name: String = ""
@@ -39,11 +34,6 @@ func _ready() -> void:
     ]:
         (n as Node).visible = false
 
-    warrior_btn.pressed.connect(func(): _pick_class("Warrior"))
-    templar_btn.pressed.connect(func(): _pick_class("Templar"))
-    rogue_btn.pressed.connect(func(): _pick_class("Rogue"))
-    taoist_btn.pressed.connect(func(): _pick_class("Taoist"))
-    mage_btn.pressed.connect(func(): _pick_class("Mage"))
 
     yes_btn.pressed.connect(_on_yes)
     no_btn.pressed.connect(_on_no)
@@ -62,14 +52,18 @@ func _ready() -> void:
 
 func _show_class_list() -> void:
     _state = "class_list"
-    class_list.visible = true
-    message_panel.visible = false
+    message_panel.start_with(PackedStringArray(["Choose the class"]))
     choice_buttons.visible = false
     name_prompt.visible = false
+    # Show reusable centered menu overlay
+    _uib().show_menu(PackedStringArray(["Warrior","Templar","Rogue","Taoist","Mage"]), func(idx, text):
+        _pick_class(text)
+    )
 
 func _pick_class(cn: String) -> void:
     _selected_class = cn
-    class_list.visible = false
+    _uib().play_select()
+    _uib().hide_menu()
     choice_buttons.visible = false
     name_prompt.visible = false
     message_panel.start_with_title(cn, PackedStringArray([_gd().get_class_desc(cn)]))
